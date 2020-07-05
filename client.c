@@ -5,6 +5,7 @@
 #include <stdlib.h> 
 #include <string.h> 
 #include <sys/socket.h> 
+#include <dirent.h>
 #define MAX 80 
 #define PORT 8080 
 #define SA struct sockaddr
@@ -29,6 +30,26 @@ void func(int sockfd)
         } 
     } 
 } 
+
+void list(int sockfd)
+
+{
+	DIR *d;
+
+	struct dirent *dir;
+
+	d = opendir(" /home/PRO/Projet_Serveur");
+
+	if (d)
+
+	{
+		while((dir = readdir(d)) != NULL)
+		{
+			printf("%s \n", dir->d_name);
+		}
+		closedir(d);
+	}
+}
   
 int main() 
 { 
@@ -63,4 +84,11 @@ int main()
   
     // close the socket 
     close(sockfd); 
+
+	{ 
+	  int sockfd;
+ 	  list(sockfd);
+
+	return(0);
+	}
 }
